@@ -1,16 +1,75 @@
-plugins {
-    id 'java'
+allprojects {
+    // Apply the java plugin to add support for Java
+    apply plugin: 'java'
+
+    sourceCompatibility = 12
+    targetCompatibility = 12
+
+    // In this section you declare where to find the dependencies of your project
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+
+    dependencies {}
 }
 
 group 'com.ritualsoftheold'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
 
-repositories {
-    mavenCentral()
+project(':Foreman:Weltschmerz:weltschmerz-environment') {
+    dependencies {
+        compile project(':Foreman:Weltschmerz:weltschmerz-misc')
+    }
+}
+
+
+project(':Foreman:Weltschmerz:weltschmerz-core') {
+    dependencies {
+        compile project(':Foreman:Weltschmerz:weltschmerz-environment')
+        compile project(':Foreman:Weltschmerz:weltschmerz-misc')
+    }
+}
+
+
+project(':Foreman') {
+    dependencies {
+        compile project(':Foreman:Weltschmerz:weltschmerz-core')
+        compile project(':Foreman:Weltschmerz:weltschmerz-misc')
+    }
+}
+
+project(':TerraServer:terra-offheap') {
+    dependencies {
+        compile project(':TerraServer:terra-core')
+    }
+    test {
+        exclude '**/*'
+    }
+}
+
+project(':TerraServer:terra-meshgen') {
+    dependencies {
+        compile project(':TerraServer:terra-offheap')
+        compile project(':TerraServer:terra-core')
+    }
+    test {
+        exclude '**/*'
+    }
+}
+
+project(':TerraServer:terra-core') {
+    test {
+        exclude '**/*'
+    }
 }
 
 dependencies {
+    compile project(':Foreman')
+    compile project(':TerraServer:terra-core')
+    compile project(':TerraServer:terra-offheap')
+    compile project(':TerraServer:terra-meshgen')
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

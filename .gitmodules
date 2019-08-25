@@ -1,0 +1,6 @@
+[submodule "Foreman"]
+	path = Foreman
+	url = git@github.com:starandserpent/Foreman.git
+[submodule "TerraServer"]
+	path = TerraServer
+	url = git@github.com:starandserpent/TerraServer.git
