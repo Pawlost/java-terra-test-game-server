@@ -1,10 +1,6 @@
 apply from: 'TerraServer/settings.gradle'
-apply from: 'Foreman/settings.gradle'
-apply from: 'Foreman/Weltschmerz/settings.gradle'
 
 rootProject.name = 'TestGameServer'
 
-include 'Foreman'
-include ':TerraServer:terra-core', ':TerraServer:terra-offheap', ':TerraServer:terra-meshgen'
-include ':Foreman:Weltschemrz', ':Foreman:Weltschmerz:weltschmerz-core', ':Foreman:Weltschmerz:weltschmerz-misc',
-        ':Foreman:Weltschmerz:weltschmerz-environment'
+include ':TerraServer:terra-server-manager'
+include ':TerraServer:Foreman'

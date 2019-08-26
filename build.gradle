@@ -17,59 +17,14 @@ allprojects {
 group 'com.ritualsoftheold'
 version '1.0-SNAPSHOT'
 
-
-project(':Foreman:Weltschmerz:weltschmerz-environment') {
-    dependencies {
-        compile project(':Foreman:Weltschmerz:weltschmerz-misc')
-    }
-}
-
-
-project(':Foreman:Weltschmerz:weltschmerz-core') {
-    dependencies {
-        compile project(':Foreman:Weltschmerz:weltschmerz-environment')
-        compile project(':Foreman:Weltschmerz:weltschmerz-misc')
-    }
-}
-
-
-project(':Foreman') {
-    dependencies {
-        compile project(':Foreman:Weltschmerz:weltschmerz-core')
-        compile project(':Foreman:Weltschmerz:weltschmerz-misc')
-    }
-}
-
-project(':TerraServer:terra-offheap') {
-    dependencies {
-        compile project(':TerraServer:terra-core')
-    }
-    test {
-        exclude '**/*'
-    }
-}
-
-project(':TerraServer:terra-meshgen') {
-    dependencies {
-        compile project(':TerraServer:terra-offheap')
-        compile project(':TerraServer:terra-core')
-    }
-    test {
-        exclude '**/*'
-    }
-}
-
-project(':TerraServer:terra-core') {
+project(':TerraServer:terra-server-manager') {
     test {
         exclude '**/*'
     }
 }
 
 dependencies {
-    compile project(':Foreman')
-    compile project(':TerraServer:terra-core')
-    compile project(':TerraServer:terra-offheap')
-    compile project(':TerraServer:terra-meshgen')
+    compile project(':TerraServer:terra-server-manager')
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
