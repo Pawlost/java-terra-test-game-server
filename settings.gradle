@@ -1,6 +1,11 @@
 apply from: 'TerraServer/settings.gradle'
+apply from: 'terra-test-game-client/settings.gradle'
 
 rootProject.name = 'TestGameServer'
 
-include ':TerraServer:terra-server-manager'
-include ':TerraServer:Foreman'
+include ':TerraServer:terra-server-manager', ':TerraServer:Foreman:TerraCore', ':TerraServer:Foreman',
+        ':TerraServer:Foreman:Weltschmerz:weltschmerz-core', ':TerraServer:Foreman:Weltschmerz:weltschmerz-misc',
+        ':TerraServer:Foreman:Weltschmerz:weltschmerz-environment'
+include ':terra-test-game-client', ':terra-test-game-client:TerraClient', ':terra-test-game-client:TerraClient:terra-meshgen',
+        ':terra-test-game-client:TerraClient:TerraCore', ':terra-test-game-client:3D-model-loader'
+include ':3D-model-loader'

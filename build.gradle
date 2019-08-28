@@ -17,7 +17,51 @@ allprojects {
 group 'com.ritualsoftheold'
 version '1.0-SNAPSHOT'
 
-project(':TerraServer:terra-server-manager') {
+project(':TerraServer:Foreman:Weltschmerz:weltschmerz-environment'){
+    dependencies {
+        compile project (':TerraServer:Foreman:Weltschmerz:weltschmerz-misc')
+    }
+}
+
+
+project (':TerraServer:Foreman:Weltschmerz:weltschmerz-core'){
+    dependencies {
+        compile project(':TerraServer:Foreman:Weltschmerz:weltschmerz-environment')
+    }
+}
+
+project (':TerraServer:Foreman:Weltschmerz:weltschmerz-core'){
+    dependencies {
+        compile project (':TerraServer:Foreman:Weltschmerz:weltschmerz-misc')
+    }
+}
+
+project(':TerraServer:Foreman'){
+    dependencies {
+        compile project (':TerraServer:Foreman:Weltschmerz:weltschmerz-core')
+        compile project (':TerraServer:Foreman:Weltschmerz:weltschmerz-misc')
+    }
+}
+
+project (':terra-test-game-client:TerraClient:terra-meshgen'){
+    dependencies {
+        compile project (':terra-test-game-client:TerraClient:TerraCore')
+    }
+}
+
+
+project(':terra-test-game-client'){
+    dependencies {
+        compile project (':terra-test-game-client:TerraClient:TerraCore')
+        compile project (':terra-test-game-client:TerraClient:terra-meshgen')
+        compile project (':terra-test-game-client:3D-model-loader')
+    }
+}
+
+project(':TerraServer:terra-server-manager'){
+    dependencies {
+        compile project(':TerraServer:Foreman:TerraCore')
+    }
     test {
         exclude '**/*'
     }
@@ -25,6 +69,10 @@ project(':TerraServer:terra-server-manager') {
 
 dependencies {
     compile project(':TerraServer:terra-server-manager')
+    compile project(':TerraServer:Foreman')
+    compile project(':terra-test-game-client')
+    compile project(':terra-test-game-client:TerraClient:terra-meshgen')
+    compile project(':3D-model-loader')
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
