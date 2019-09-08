@@ -1,7 +1,7 @@
 package com.ritualsoftheold.testgame.server;
 
+import com.ritualsoftheold.terra.core.WorldLoadListener;
 import com.ritualsoftheold.terra.core.chunk.ChunkLArray;
-import com.ritualsoftheold.terra.server.manager.world.WorldLoadListener;
 import com.ritualsoftheold.testgame.client.network.Client;
 
 import java.util.ArrayList;

@@ -5,7 +5,7 @@ import com.ritualsoftheold.terra.core.materials.Registry;
 import com.ritualsoftheold.terra.core.materials.TerraModule;
 import com.ritualsoftheold.terra.core.materials.TerraObject;
 import com.ritualsoftheold.foreman.main.Foreman;
-import com.ritualsoftheold.terra.server.manager.WorldGeneratorInterface;
+import com.ritualsoftheold.terra.server.manager.gen.interfaces.WorldGeneratorInterface;
 
 public class WeltschmerzWorldGenerator implements WorldGeneratorInterface {
 

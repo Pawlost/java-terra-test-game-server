@@ -3,7 +3,7 @@ package com.ritualsoftheold.testgame.server;
 import com.ritualsoftheold.terra.core.materials.Registry;
 import com.ritualsoftheold.terra.core.materials.TerraModule;
 import com.ritualsoftheold.terra.core.octrees.OctreeBase;
-import com.ritualsoftheold.terra.server.manager.WorldGeneratorInterface;
+import com.ritualsoftheold.terra.server.manager.gen.interfaces.WorldGeneratorInterface;
 import com.ritualsoftheold.terra.server.manager.world.OffheapLoadMarker;
 import com.ritualsoftheold.terra.server.manager.world.OffheapWorld;
 import com.ritualsoftheold.testgame.client.TestGameClient;
