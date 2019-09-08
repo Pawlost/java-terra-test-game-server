@@ -1,4 +1,4 @@
-package com.ritualsoftheold.foreman.main.materials;
+package com.ritualsoftheold.testgame.server.materials;
 
 import com.jme3.app.LegacyApplication;
 import com.jme3.scene.Spatial;
