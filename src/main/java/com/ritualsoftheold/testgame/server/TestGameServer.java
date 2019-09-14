@@ -3,14 +3,14 @@ package com.ritualsoftheold.testgame.server;
 import com.ritualsoftheold.terra.core.materials.Registry;
 import com.ritualsoftheold.terra.core.materials.TerraModule;
 import com.ritualsoftheold.terra.core.octrees.OctreeBase;
-import com.ritualsoftheold.terra.manager.WorldGeneratorInterface;
-import com.ritualsoftheold.terra.manager.world.OffheapLoadMarker;
-import com.ritualsoftheold.terra.manager.world.OffheapWorld;
+import com.ritualsoftheold.terra.server.manager.gen.interfaces.WorldGeneratorInterface;
+import com.ritualsoftheold.terra.server.manager.world.OffheapLoadMarker;
+import com.ritualsoftheold.terra.server.manager.world.OffheapWorld;
 import com.ritualsoftheold.testgame.client.TestGameClient;
-import com.ritualsoftheold.foreman.main.generation.WeltschmerzWorldGenerator;
-import com.ritualsoftheold.foreman.main.materials.PrimitiveResourcePack;
 import com.ritualsoftheold.testgame.client.network.Client;
 import com.ritualsoftheold.testgame.client.network.Server;
+import com.ritualsoftheold.testgame.server.generation.WeltschmerzWorldGenerator;
+import com.ritualsoftheold.testgame.server.materials.PrimitiveResourcePack;
 
 import java.util.ArrayList;
 
