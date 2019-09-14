@@ -1,4 +1,4 @@
-package com.ritualsoftheold.foreman.main.generation;
+package com.ritualsoftheold.testgame.server.generation;
 
 import com.ritualsoftheold.terra.core.chunk.ChunkLArray;
 import com.ritualsoftheold.terra.core.materials.Registry;
