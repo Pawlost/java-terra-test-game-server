@@ -1,54 +1,61 @@
 package com.ritualsoftheold.testgame.server;
 
+import com.jme3.app.LegacyApplication;
+import com.jme3.asset.AssetManager;
+import com.jme3.system.JmeSystem;
+import com.ritualsoftheold.foreman.CGHandler;
+import com.ritualsoftheold.loader.config.PrimitiveResourcePack;
 import com.ritualsoftheold.terra.core.materials.Registry;
 import com.ritualsoftheold.terra.core.materials.TerraModule;
 import com.ritualsoftheold.terra.core.octrees.OctreeBase;
-import com.ritualsoftheold.terra.server.manager.gen.interfaces.WorldGeneratorInterface;
-import com.ritualsoftheold.terra.server.manager.world.OffheapLoadMarker;
-import com.ritualsoftheold.terra.server.manager.world.OffheapWorld;
+import com.ritualsoftheold.terra.server.LoadMarker;
+import com.ritualsoftheold.terra.server.chunks.ChunkGenerator;
+import com.ritualsoftheold.terra.server.world.ServerWorld;
 import com.ritualsoftheold.testgame.client.TestGameClient;
 import com.ritualsoftheold.testgame.client.network.Client;
 import com.ritualsoftheold.testgame.client.network.Server;
-import com.ritualsoftheold.testgame.server.generation.WeltschmerzWorldGenerator;
-import com.ritualsoftheold.testgame.server.materials.PrimitiveResourcePack;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class TestGameServer implements Server {
-    private OffheapWorld world;
-    private OffheapLoadMarker player;
+public class TestGameServer extends LegacyApplication implements Server {
+    private ServerWorld world;
+    private LoadMarker player;
     private ArrayList<Client> clients;
     private ArrayList<OctreeBase> node;
     private ClientSender sender;
     private Registry registry;
+    private static final Logger logger = Logger.getLogger(LegacyApplication.class.getName());
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         TestGameServer server = new TestGameServer();
-        TestGameClient client = new TestGameClient(server, server.getRegistry());
+        TestGameClient client = new TestGameClient(server);
     }
 
     private TestGameServer() {
         //Has to be devidable by 16
+        initAssetManager();
         clients = new ArrayList<>();
         TerraModule mod = new TerraModule("testgame");
         registry = new Registry();
-        PrimitiveResourcePack resourcePack = new PrimitiveResourcePack(registry);
+        PrimitiveResourcePack resourcePack = new PrimitiveResourcePack(assetManager);
         resourcePack.registerObjects(mod);
-        WorldGeneratorInterface gen = new WeltschmerzWorldGenerator().setup(registry, mod);
+        mod.registerMaterials(registry);
+        CGHandler handler = new CGHandler();
+        ChunkGenerator cg = handler.getGenerator();
+        cg.setMaterials(mod, registry);
         node = new ArrayList<>(10000000);
         sender = new ClientSender(clients);
-        world = new OffheapWorld(gen, registry, 80, sender);
-    }
-
-    public Registry getRegistry(){
-        return registry;
+        player = new Player(sender);
+        world = new ServerWorld(cg, registry, 80, sender, node);
     }
 
     @Override
-    public ArrayList<OctreeBase> init(Client client){
-        player = world.createLoadMarker(client.getPosX(), client.getPosY(), client.getPosZ(),
-                16, 16, 0);
-        new Thread(() -> world.initialChunkGeneration(player, node)).start();
+    public ArrayList<OctreeBase> init(Client client) {
+        new Thread(() -> world.initialWorldGeneration(player)).start();
         clients.add(client);
         return node;
     }
@@ -79,5 +86,35 @@ public class TestGameServer implements Server {
                 //  new Thread(() -> world.updateLoadMarker(player, false)).start();
             }
         }*/
+    }
+
+    private void initAssetManager() {
+        URL assetCfgUrl = null;
+        if (settings != null) {
+            String assetCfg = settings.getString("AssetConfigURL");
+            if (assetCfg != null) {
+                try {
+                    assetCfgUrl = new URL(assetCfg);
+                } catch (MalformedURLException ignored) {
+                }
+                if (assetCfgUrl == null) {
+                    assetCfgUrl = LegacyApplication.class.getClassLoader().getResource(assetCfg);
+                    if (assetCfgUrl == null) {
+                        logger.log(Level.SEVERE, "Unable to access AssetConfigURL in asset config:{0}", assetCfg);
+                        return;
+                    }
+                }
+            }
+        }
+        if (assetCfgUrl == null) {
+            assetCfgUrl = JmeSystem.getPlatformAssetConfigURL();
+        }
+        if (assetManager == null) {
+            assetManager = JmeSystem.newAssetManager(assetCfgUrl);
+        }
+    }
+
+    public AssetManager getAssetManager(){
+        return assetManager;
     }
 }

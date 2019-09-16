@@ -17,50 +17,64 @@ allprojects {
 group 'com.ritualsoftheold'
 version '1.0-SNAPSHOT'
 
-project(':TerraServer:Foreman:Weltschmerz:weltschmerz-environment'){
+project(':Foreman:Weltschmerz:weltschmerz-environment'){
     dependencies {
-        compile project (':TerraServer:Foreman:Weltschmerz:weltschmerz-misc')
+        compile project (':Foreman:Weltschmerz:weltschmerz-misc')
     }
 }
 
 
-project (':TerraServer:Foreman:Weltschmerz:weltschmerz-core'){
+project (':Foreman:Weltschmerz:weltschmerz-core'){
     dependencies {
-        compile project(':TerraServer:Foreman:Weltschmerz:weltschmerz-environment')
+        compile project(':Foreman:Weltschmerz:weltschmerz-environment')
     }
 }
 
-project (':TerraServer:Foreman:Weltschmerz:weltschmerz-core'){
+project (':Foreman:Weltschmerz:weltschmerz-core'){
     dependencies {
-        compile project (':TerraServer:Foreman:Weltschmerz:weltschmerz-misc')
+        compile project (':Foreman:Weltschmerz:weltschmerz-misc')
     }
 }
 
-project(':TerraServer:Foreman'){
+project(':Foreman:TerraServer:3D-model-loader'){
     dependencies {
-        compile project (':TerraServer:Foreman:Weltschmerz:weltschmerz-core')
-        compile project (':TerraServer:Foreman:Weltschmerz:weltschmerz-misc')
+        compile project(':Foreman:TerraServer:3D-model-loader:TerraCore')
+    }
+}
+
+
+project(':Foreman') {
+    dependencies {
+        compile project(':Foreman:Weltschmerz:weltschmerz-core')
+        compile project(':Foreman:Weltschmerz:weltschmerz-misc')
+        compile project(':Foreman:TerraServer:3D-model-loader:TerraCore')
+        compile project(':Foreman:TerraServer')
     }
 }
 
 project (':terra-test-game-client:TerraClient:terra-meshgen'){
     dependencies {
-        compile project (':terra-test-game-client:TerraClient:TerraCore')
+        compile project (':terra-test-game-client:TerraClient:3D-model-loader:TerraCore')
     }
 }
 
+project (':terra-test-game-client:TerraClient:3D-model-loader'){
+    dependencies {
+        compile project (':terra-test-game-client:TerraClient:3D-model-loader:TerraCore')
+    }
+}
 
 project(':terra-test-game-client'){
     dependencies {
-        compile project (':terra-test-game-client:TerraClient:TerraCore')
+        compile project (':terra-test-game-client:TerraClient:3D-model-loader:TerraCore')
         compile project (':terra-test-game-client:TerraClient:terra-meshgen')
-        compile project (':terra-test-game-client:3D-model-loader')
+        compile project (':terra-test-game-client:TerraClient:3D-model-loader')
     }
 }
 
-project(':TerraServer:terra-server-manager'){
+project(':Foreman:TerraServer') {
     dependencies {
-        compile project(':TerraServer:Foreman:TerraCore')
+        compile project(':Foreman:TerraServer:3D-model-loader:TerraCore')
     }
     test {
         exclude '**/*'
@@ -68,11 +82,11 @@ project(':TerraServer:terra-server-manager'){
 }
 
 dependencies {
-    compile project(':TerraServer:terra-server-manager')
-    compile project(':TerraServer:Foreman')
+    compile project(':Foreman:TerraServer')
+    compile project(':Foreman')
+    compile project(':Foreman:TerraServer:3D-model-loader:TerraCore')
     compile project(':terra-test-game-client')
     compile project(':terra-test-game-client:TerraClient:terra-meshgen')
-    compile project(':3D-model-loader')
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

@@ -1,9 +1,6 @@
-[submodule "TerraServer"]
-	path = TerraServer
-	url = git@github.com:starandserpent/TerraServer.git
 [submodule "terra-test-game-client"]
 	path = terra-test-game-client
 	url = git@github.com:starandserpent/terra-test-game-client.git
-[submodule "3D-model-loader"]
-	path = 3D-model-loader
-	url = git@github.com:starandserpent/3D-model-loader.git
+[submodule "Foreman"]
+	path = Foreman
+	url = git@github.com:starandserpent/Foreman.git
