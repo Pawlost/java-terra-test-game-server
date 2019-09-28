@@ -6,7 +6,7 @@ import com.ritualsoftheold.terra.server.LoadMarker;
 public class Player extends LoadMarker {
     private ClientSender sender;
 
-    public Player (ClientSender sender){
+    public Player(ClientSender sender) {
         super(0.0f, 0.0f, 0.0f, 16, 16);
         this.sender = sender;
     }

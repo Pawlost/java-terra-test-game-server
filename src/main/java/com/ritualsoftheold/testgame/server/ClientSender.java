@@ -9,13 +9,13 @@ import java.util.ArrayList;
 public class ClientSender implements WorldLoadListener {
     private ArrayList<Client> clients;
 
-    ClientSender(ArrayList<Client> clients){
+    ClientSender(ArrayList<Client> clients) {
         this.clients = clients;
     }
 
     @Override
     public void chunkLoaded(ChunkLArray chunk) {
-        for(Client client:clients){
+        for (Client client : clients) {
             client.sendChunk(chunk);
         }
     }

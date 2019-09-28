@@ -32,7 +32,7 @@ public class TestGameServer extends LegacyApplication implements Server {
 
     public static void main(String[] args) {
         TestGameServer server = new TestGameServer();
-        TestGameClient client = new TestGameClient(server);
+        new TestGameClient(server);
     }
 
     private TestGameServer() {
@@ -114,7 +114,7 @@ public class TestGameServer extends LegacyApplication implements Server {
         }
     }
 
-    public AssetManager getAssetManager(){
+    public AssetManager getAssetManager() {
         return assetManager;
     }
 }
