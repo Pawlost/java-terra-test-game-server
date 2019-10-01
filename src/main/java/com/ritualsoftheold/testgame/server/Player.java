@@ -6,8 +6,8 @@ import com.ritualsoftheold.terra.server.LoadMarker;
 public class Player extends LoadMarker {
     private ClientSender sender;
 
-    public Player(ClientSender sender) {
-        super(0.0f, 0.0f, 0.0f, 16, 16);
+    Player(float posX, float posY, float posZ, int radius, ClientSender sender) {
+        super(posX, posY, posZ, radius, radius);
         this.sender = sender;
     }
 
@@ -28,6 +28,8 @@ public class Player extends LoadMarker {
 
     @Override
     public void move(float x, float y, float z) {
-
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 }

@@ -17,26 +17,26 @@ allprojects {
 group 'com.ritualsoftheold'
 version '1.0-SNAPSHOT'
 
-project(':Foreman:Weltschmerz:weltschmerz-environment'){
+project(':Foreman:Weltschmerz:weltschmerz-environment') {
     dependencies {
-        compile project (':Foreman:Weltschmerz:weltschmerz-misc')
+        compile project(':Foreman:Weltschmerz:weltschmerz-misc')
     }
 }
 
 
-project (':Foreman:Weltschmerz:weltschmerz-core'){
+project(':Foreman:Weltschmerz:weltschmerz-core') {
     dependencies {
         compile project(':Foreman:Weltschmerz:weltschmerz-environment')
     }
 }
 
-project (':Foreman:Weltschmerz:weltschmerz-core'){
+project(':Foreman:Weltschmerz:weltschmerz-core') {
     dependencies {
-        compile project (':Foreman:Weltschmerz:weltschmerz-misc')
+        compile project(':Foreman:Weltschmerz:weltschmerz-misc')
     }
 }
 
-project(':Foreman:TerraServer:3D-model-loader'){
+project(':Foreman:TerraServer:3D-model-loader') {
     dependencies {
         compile project(':Foreman:TerraServer:3D-model-loader:TerraCore')
     }
@@ -52,23 +52,29 @@ project(':Foreman') {
     }
 }
 
-project (':terra-test-game-client:TerraClient:terra-meshgen'){
+project(':terra-test-game-client:TerraClient:terra-meshgen') {
     dependencies {
-        compile project (':terra-test-game-client:TerraClient:3D-model-loader:TerraCore')
+        compile project(':terra-test-game-client:TerraClient:3D-model-loader:TerraCore')
     }
 }
 
-project (':terra-test-game-client:TerraClient:3D-model-loader'){
+project(':terra-test-game-client:TerraClient:3D-model-loader') {
     dependencies {
-        compile project (':terra-test-game-client:TerraClient:3D-model-loader:TerraCore')
+        compile project(':terra-test-game-client:TerraClient:3D-model-loader:TerraCore')
     }
 }
 
-project(':terra-test-game-client'){
+project(':terra-test-game-client') {
     dependencies {
-        compile project (':terra-test-game-client:TerraClient:3D-model-loader:TerraCore')
-        compile project (':terra-test-game-client:TerraClient:terra-meshgen')
-        compile project (':terra-test-game-client:TerraClient:3D-model-loader')
+        compile project(':terra-test-game-client:TerraClient:3D-model-loader:TerraCore')
+        compile project(':terra-test-game-client:TerraClient:terra-meshgen')
+        compile project(':terra-test-game-client:TerraClient:3D-model-loader')
+    }
+}
+
+project(':terra-test-game-client:TerraClient') {
+    dependencies {
+        compile project(':terra-test-game-client:TerraClient:3D-model-loader:TerraCore')
     }
 }
 

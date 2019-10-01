@@ -7,7 +7,6 @@ import com.ritualsoftheold.foreman.CGHandler;
 import com.ritualsoftheold.loader.config.PrimitiveResourcePack;
 import com.ritualsoftheold.terra.core.materials.Registry;
 import com.ritualsoftheold.terra.core.materials.TerraModule;
-import com.ritualsoftheold.terra.core.octrees.OctreeBase;
 import com.ritualsoftheold.terra.server.LoadMarker;
 import com.ritualsoftheold.terra.server.chunks.ChunkGenerator;
 import com.ritualsoftheold.terra.server.world.ServerWorld;
@@ -25,9 +24,6 @@ public class TestGameServer extends LegacyApplication implements Server {
     private ServerWorld world;
     private LoadMarker player;
     private ArrayList<Client> clients;
-    private ArrayList<OctreeBase> node;
-    private ClientSender sender;
-    private Registry registry;
     private static final Logger logger = Logger.getLogger(LegacyApplication.class.getName());
 
     public static void main(String[] args) {
@@ -40,24 +36,22 @@ public class TestGameServer extends LegacyApplication implements Server {
         initAssetManager();
         clients = new ArrayList<>();
         TerraModule mod = new TerraModule("testgame");
-        registry = new Registry();
+        Registry registry = new Registry();
         PrimitiveResourcePack resourcePack = new PrimitiveResourcePack(assetManager);
         resourcePack.registerObjects(mod);
         mod.registerMaterials(registry);
         CGHandler handler = new CGHandler();
         ChunkGenerator cg = handler.getGenerator();
         cg.setMaterials(mod, registry);
-        node = new ArrayList<>(10000000);
-        sender = new ClientSender(clients);
-        player = new Player(sender);
-        world = new ServerWorld(cg, registry, 80, sender, node);
+        ClientSender sender = new ClientSender(clients);
+        player = new Player(0.0f, 0.0f, 0.0f, 16, sender);
+        world = new ServerWorld(16, 0, 16, cg, registry, 100);
     }
 
     @Override
-    public ArrayList<OctreeBase> init(Client client) {
+    public void init(Client client) {
         new Thread(() -> world.initialWorldGeneration(player)).start();
         clients.add(client);
-        return node;
     }
 
     @Override
