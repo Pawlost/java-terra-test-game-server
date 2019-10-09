@@ -8,7 +8,7 @@ import com.ritualsoftheold.loader.config.PrimitiveResourcePack;
 import com.ritualsoftheold.terra.core.materials.Registry;
 import com.ritualsoftheold.terra.core.materials.TerraModule;
 import com.ritualsoftheold.terra.server.LoadMarker;
-import com.ritualsoftheold.terra.server.chunks.ChunkGenerator;
+import com.ritualsoftheold.terra.server.world.ChunkGenerator;
 import com.ritualsoftheold.terra.server.world.ServerWorld;
 import com.ritualsoftheold.testgame.client.TestGameClient;
 import com.ritualsoftheold.testgame.client.network.Client;
@@ -24,6 +24,8 @@ public class TestGameServer extends LegacyApplication implements Server {
     private ServerWorld world;
     private LoadMarker player;
     private ArrayList<Client> clients;
+    private static final int MAX_WORLD_SIZE = 2097151;
+    private static final long WORLD_SIZE = 200;
     private static final Logger logger = Logger.getLogger(LegacyApplication.class.getName());
 
     public static void main(String[] args) {
@@ -44,43 +46,25 @@ public class TestGameServer extends LegacyApplication implements Server {
         ChunkGenerator cg = handler.getGenerator();
         cg.setMaterials(mod, registry);
         ClientSender sender = new ClientSender(clients);
-        player = new Player(0.0f, 0.0f, 0.0f, 16, sender);
-        world = new ServerWorld(16, 0, 16, cg, registry, 100);
+        player = new Player(0.0f, 0.0f, 0.0f, 3, sender);
+        for (int i : player.getPlayerOctants()) {
+            System.out.println(i);
+        }
+        world = new ServerWorld(0, 0, 0, cg, registry, (int) WORLD_SIZE);
     }
 
     @Override
     public void init(Client client) {
         new Thread(() -> world.initialWorldGeneration(player)).start();
         clients.add(client);
+        client.sendOctree(world.octree);
     }
 
     @Override
     public void update() {
-        /*int camX = (int) (cam.getLocation().x / 16f) * 16;
-        int playerX = (int) (player.getX() / 16f) * 16;
-        int camZ = (int) (cam.getLocation().z / 16f) * 16;
-        int playerZ = (int) (player.getZ() / 16f) * 16;
-
-        if (geomCreateQueue.isEmpty() && !player.hasMoved() && geomDeleteQueue.isEmpty()) {
-            if (camX != playerX || camZ != playerZ) {
-
-                if (camX > playerX) {
-                    playerX += 16;
-                } else if (camX < playerX) {
-                    playerX -= 16;
-                }
-
-                if (camZ > playerZ) {
-                    playerZ += 16;
-                } else if (camZ < playerZ) {
-                    playerZ -= 16;
-                }
-
-                player.move(playerX, (int) cam.getLocation().y, playerZ);
-                //  new Thread(() -> world.updateLoadMarker(player, false)).start();
-            }
-        }*/
+        player.move(cam.getLocation().x, cam.getLocation().y, cam.getLocation().y);
     }
+
 
     private void initAssetManager() {
         URL assetCfgUrl = null;

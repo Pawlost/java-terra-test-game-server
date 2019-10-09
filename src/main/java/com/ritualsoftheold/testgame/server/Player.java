@@ -1,6 +1,7 @@
 package com.ritualsoftheold.testgame.server;
 
 import com.ritualsoftheold.terra.core.chunk.ChunkLArray;
+import com.ritualsoftheold.terra.core.octrees.OffheapOctree;
 import com.ritualsoftheold.terra.server.LoadMarker;
 
 public class Player extends LoadMarker {
@@ -14,6 +15,11 @@ public class Player extends LoadMarker {
     @Override
     public void sendChunk(ChunkLArray chunk) {
         sender.chunkLoaded(chunk);
+    }
+
+    @Override
+    public void sendOctree(OffheapOctree octree) {
+        sender.octreeLoaded(octree);
     }
 
     @Override
@@ -31,5 +37,10 @@ public class Player extends LoadMarker {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    @Override
+    public void octreeLoaded(OffheapOctree octree) {
+
     }
 }
