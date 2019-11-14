@@ -25,7 +25,7 @@ public class TestGameServer extends LegacyApplication implements Server {
     private LoadMarker player;
     private ArrayList<Client> clients;
     private static final int MAX_WORLD_SIZE = 2097151;
-    private static final long WORLD_SIZE = 200;
+    private static final long WORLD_SIZE = 4000;
     private static final Logger logger = Logger.getLogger(LegacyApplication.class.getName());
 
     public static void main(String[] args) {
